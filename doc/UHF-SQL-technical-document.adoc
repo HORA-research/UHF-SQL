@@ -1,0 +1,187 @@
+= Relpart Decomposition Algorithms in {produit}
+Christina Khnaisser <Christina.Khnaisser@usherbrooke.ca>
+Zeineb Zaiet <Zeineb.Zaiet@usherbrooke.ca>
+:projet: Voyage
+:produit: UHF-SQL
+:toc:
+:toc-title: Tables des matières
+:sectnums:
+:stem: latexmath
+
+
+Let stem:[R] be a relation composed of one key attribute denoted stem:[k]
+and one non-key attribute denoted stem:[a]. More generally, let stem:[n] be the total number of non-key attributes
+in a relation.
+
+== UHF
+
+=== Valid-time unitemporal schema
+*General formula:* stem:[R] is partitioned into stem:[3 + 3 \times n] relparts
+(where stem:[n] represents the number of non-key attributes):
+
+* *3 partitions:* stem:[R@Vbx], stem:[R@Vbe] and stem:[R@Vxe],
+each containing a corresponding valid-time attribute.
+* stem:[n] partitions stem:[R\_ai\_@Vbx], stem:[n] partitions stem:[R\_ai\_@Vbe] and stem:[n] partitions stem:[R\_ai\_@Vxe]. Each partition contains the key attributes
+of stem:[R], the attribute stem:[a_i], and a valid-time attribute
+corresponding to stem:[a_i].
+
+The following figure illustrates an example of the valid-time unitemporalization
+of a relation according to the UHF model.
+
+[#figuhfV-relparts]
+.Relparts according to the validity category.
+image::_fig/relparts/uhf_V.png[]
+
+
+=== Transaction-time unitemporal schema
+
+*General formula:* stem:[R] is partitioned into stem:[2 + 2 \times n] relparts
+(where stem:[n] represents the number of non-key attributes):
+
+* *2 partitions:* stem:[R@Tbe] and stem:[R@Tbx],
+each containing a corresponding valid-time attribute.
+* 2 partitions stem:[R\_ai\_@Tbe] and stem:[R\_ai\_@Tbx] for each non-key attribute
+stem:[a_i], each containing the key attributes of stem:[R], the attribute
+stem:[a_i], and a transaction-time temporal attribute for stem:[a_i].
+
+The following figure illustrates an example of the transaction-time
+unitemporalization of a relation according to the UHF model.
+
+.Relparts according to the transaction category.
+image::_fig/relparts/uhf_T.png[]
+
+
+=== Bitemporal schema
+
+*General formula:* stem:[R] is partitioned into stem:[6 + 6 \times n] relparts
+(where stem:[n] represents the number of non-key attributes):
+
+* *6 partitions:* stem:[R@VbxTbx], stem:[R@VbxTbe], stem:[R@VbeTbx], stem:[R@VbeTbe],
+stem:[R@VxeTbx] and stem:[R@VxeTbe], each
+containing the key attributes of stem:[R], a valid-time temporal attribute,
+and a transaction-time temporal attribute.
+
+* *stem:[n] partitions:* stem:[R\_ai\_@VbxTbx], stem:[n] partitions stem:[R\_ai\_@VbxTbe],
+stem:[n] partitions stem:[R\_ai\_@VbeTbx], stem:[n] partitions stem:[R\_ai\_@VbeTbe],
+stem:[n] partitions stem:[R\_ai\_@VxeTbx] and stem:[n] partitions stem:[R\_ai\_@VxeTbe], each containing the key attributes of
+stem:[R], the attribute stem:[a_i], a valid-time temporal attribute, and a
+transaction-time temporal attribute.
+
+The following figure illustrates an example of the bitemporalization of a
+relation according to the UHF model.
+
+.Relparts according to the bitemporal category.
+image::_fig/relparts/uhf_VT.png[]
+
+== DDLM
+
+=== Valid-time unitemporal schema
+
+*General formula:* stem:[R] is partitioned into stem:[2 + n] relparts
+(where stem:[n] represents the number of non-key attributes):
+
+* One partition stem:[R@Vbx] containing all attributes of stem:[R], a valid-time
+temporal attribute for each non-key attribute denoted stem:[ai\_@Vbx], and a
+valid-time temporal attribute for the key attributes denoted stem:[@Vbx].
+
+* One partition stem:[R@Vbe] containing the key attributes of stem:[R] and a
+valid-time temporal attribute stem:[@Vbe].
+
+* stem:[n] partitions stem:[R\_ai\_@Vbe] for each non-key attribute stem:[a_i].
+
+The following figure illustrates an example of the valid-time unitemporalization
+of a relation according to the DDLM model.
+
+.Relparts according to the validity category.
+image::_fig/relparts/ddlm_V.png[]
+
+
+=== Transaction-time unitemporal schema
+
+*General formula:* stem:[R] is partitioned into stem:[n] relparts
+(where stem:[n] represents the number of non-key attributes):
+
+* One partition stem:[R@Tbe] containing the key attributes of stem:[R] and a
+transaction-time temporal attribute stem:[@Tbe].
+* stem:[n] partitions stem:[R\_ai\_@Tbe] for each non-key attribute stem:[a_i].
+
+The following figure illustrates an example of the transaction-time
+unitemporalization of a relation according to the DDLM model.
+
+.Relparts according to the transaction category.
+image::_fig/relparts/ddlm_T.png[]
+
+=== Bitemporal schema
+
+*General formula:* stem:[R] is partitioned into stem:[2 + n] relparts
+(where stem:[n] represents the number of non-key attributes):
+
+* One partition stem:[R@VbxTbe] containing all attributes of stem:[R], a valid-time
+temporal attribute stem:[@Vbx] for each non-key attribute (stem:[R\_ai\_@Vbx]), a valid-time temporal
+attribute stem:[@Vbx] for the key attributes, and a transaction-time temporal
+attribute stem:[@Tbe].
+
+* One partition stem:[R@VbeTbe] containing the key attributes of stem:[R], a valid-time
+temporal attribute stem:[@Vbe], and a transaction-time temporal attribute stem:[@Tbe].
+
+* stem:[n] partitions stem:[R\_ai\_@VbeTbe], each containing the key attributes of
+stem:[R], the attribute stem:[a_i], a valid-time temporal attribute stem:[@Vbe],
+and a transaction-time temporal attribute stem:[@Tbe].
+
+The following figure illustrates an example of the bitemporalization of a
+relation according to the DDLM model.
+
+.Relparts according to the bitemporal category.
+image::_fig/relparts/ddlm_VT.png[]
+
+
+
+== BCDM
+
+=== Valid-time unitemporal schema
+
+*General formula:* stem:[R] is partitioned into *one* relpart stem:[R@Vbe]
+containing all attributes of stem:[R], with the addition of a valid-time
+temporal attribute denoted stem:[@Vbe].
+
+The following figure illustrates an example of the valid-time unitemporalization
+of a relation according to the BCDM model.
+
+
+.Relparts according to the validity category.
+image::_fig/relparts/bcdm_V.png[]
+
+
+=== Transaction-time unitemporal schema
+
+*General formula:* stem:[R] is partitioned into 2 relparts:
+
+* One partition stem:[R@Tbe] containing all attributes of stem:[R] and a
+transaction-time temporal attribute stem:[@Tbe].
+
+* One partition stem:[R@Tbx] containing all attributes of stem:[R] and a
+transaction-time temporal attribute stem:[@Tbx].
+
+The following figure illustrates an example of the transaction-time
+unitemporalization of a relation according to the BCDM model.
+
+.Relparts according to the transaction category.
+image::_fig/relparts/bcdm_T.png[]
+
+
+=== Bitemporal schema
+
+*General formula:* stem:[R] is partitioned into 2 relparts:
+
+* One partition stem:[R@VbeTbe] containing all attributes of stem:[R], a valid-time
+temporal attribute stem:[@Vbe], and a transaction-time temporal attribute stem:[@Tbe].
+
+* One partition stem:[R@VbeTbx] containing all attributes of stem:[R], a valid-time
+temporal attribute stem:[@Vbe], and a transaction-time temporal attribute stem:[@Tbx].
+
+The following figure illustrates an example of the bitemporalization of a
+relation according to the BCDM model.
+
+
+.Relparts according to the bitemporal category.
+image::_fig/relparts/bcdm_VT.png[]

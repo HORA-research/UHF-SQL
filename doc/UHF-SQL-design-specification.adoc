@@ -1,0 +1,179 @@
+= {produit} Design Specification
+Christina Khnaisser <Christina.Khnaisser@usherbrooke.ca>
+Zeineb Zaiet <Zeineb.Zaiet@usherbrooke.ca>
+:projet: Voyage
+:produit: UHF-SQL
+:toc:
+:toc-title: Tables des matières
+:sectnums:
+
+== Introduction
+
+This document describes the design of the product {product} developed within the framework of the UHF project. Its main objective is to present and justify the necessary and sufficient modeling required to historicize a relational schema.
+
+This document serves as the sole applicable functional reference upon which the product's architecture and design will be established. It is intended for the project owner, the project manager, the quality assurance group, the testing managers, and all members of the development team.
+
+== Architecture
+
+The {produit} program is divided into four modules: configuration, generator, model, and process.
+
+===  Configuration Module
+
+The configuration module groups all the classes needed to retrieve connection information and historicization parameters.
+
+=== Model Module
+
+The model module groups all the classes needed to represent a relational schema. This includes relation variables (relvar), attributes, defined types, key constraints, referential constraints, and temporal partitions (relpart).
+
+=== Process Module
+
+The process module groups all the classes needed to implement the schema construction algorithms from a database and the historicization algorithms.
+
+=== Generator Module
+
+The generator module groups all the classes needed to generate SQL statements executable on a DBMS. This includes code templates, their corresponding classes, and the generators.
+
+== Configuration Module
+
+The configuration module manages the connection parameters to the database to be historicized, as well as the historicization parameters. It is in YAML format and contains the following parameters:
+
+.Connection parameters to the database schema to be historicized
+----
+ srcServer:
+    - rdbms: postgresql
+    - host: localhost
+    - port: 5432
+    - rdbmsPath: /Applications/Postgres.app/Contents/Versions/17/bin/psql
+    - databaseId: uhf
+    - schemaId: supply
+    - user: uhf
+    - pass: uhf
+----
+
+* `rdbms` : The relational database management system in use.
+* `host` : Address of the server hosting the database.
+* `port` : Access port of the DBMS.
+* `rdbmsPath` : Path to the DBMS client executable.
+* `databaseId` : Name of the database to connect to.
+* `schemaId` : Name of the database schema to be historicized.
+* `user` : Username used to connect to the database.
+* `pass` : Password associated with the user.
+
+.Historicisation parameters
+----
+temporalModel: UHF # (BCDM, DDLM, UHF)
+schemaTemporalCategory: V # (V, T, VT)
+author: Zeineb Zaiet
+outDirPath: demo/Supplier-Part/res
+version: 1.0
+includeVxx: false
+executeScript: true
+useMode: virtual # (virtual, physical, both)
+----
+
+* `temporalModel` : The temporal model selected: UHF, DDLM, or BCDM.
+* `schemaTemporalCategory` : The desired temporal category: valid time (V), transaction time (T) ou bitemporal (VT).
+* `author` : Name of the author responsible for the generated schema.
+* `outDirPath` : Name of the directory in which the SQL files of the historicized schema are created.
+* `version`: Version of the generated historicized schema.
+* `includeVxx` : Whether or not to include the Vxx temporal partition (indeterminate period).
+* `executeScript` : Whether or not to execute the generated SQL files on the target DBMS.
+* `useMode` : Usage mode of the generated schema :
+   - `physical` : creates a schema with populated tables ;
+   - `virtual` : creates a schema with views generated from temporal functional dependencies ;
+   - `both` : jointly generates both _physical_ and _virtual_ modes.
+
+
+== Class diagram
+image::_fig/Class_Diag/configuration.png[]
+
+
+== Design patterns used
+
+== Module du modèle
+
+The model module contains the main class `Schema`.
+
+`Schema` represents a relational schema composed of relation variables (`Relvar`) and their temporal partitions  (`Relpart`), referential constraints (`ReferentialKey`), defined types and predefined types and temporal functional dependencies.
+
+Une dépendance fonctionnelle est une contrainte entre deux ensembles d’attributs, un ensemble déterminant et un ensemble dépendant.
+A functional dependency is a constraint between two sets of attributes, a determining set and a dependent set. For a relation R(X,Y,Z) where X, Y and Z are subsets of the set of attributes, a functional dependency (FD) from X to Y, denoted X → Y, is said to exist if each value of X corresponds to at most one value of Y (i.e., zero or one).
+A temporal functional dependency (TFD) is an FD with the addition of one or more temporal attributes to the determining set.
+
+=== Class diagram
+
+
+== Process Module
+
+
+=== Class diagram
+image::_fig/Class_Diag/process.png[]
+
+
+
+À partir du fichier de configuration, le programme va charger les valeurs des paramètres dans la classe `DatabaseConfig`.
+ Ensuite, le schéma existant (srcSchema) est construit les instances des classes du modèle (`BuildSchema`).
+L’instance de cette classe est retournée au Main pour initialiser la classe `Historicize` qui va créer un schéma historicisé du schéma de source (`outSchema`).
+Ensuite le schéma historicisé est envoyé à la classe `uhfSqlGenerator` pour créer les fichiers SQL correspondants.
+Finalement, si executeScript = true, les fichiers sont exécutés dans la base de données source.
+
+.Diagramme de séquence des processus
+[plantuml,target=sequence,format=png]
+----
+include::_fig/UHF-SQL_sequence.puml[]
+----
+
+=== Construction du schéma non historicisé
+
+La construction du schéma non historicisé consiste à instancier les classes du modèle à partir des éléments existant dans une base de données.
+
+La construction utilise la librairie _SchemaCrawler_ pour la connexion et la récupération des informations.
+
+Les tables sont représentées par les variables de relations.
+
+=== Construction du schéma historicisé
+
+La construction d’un schéma historicisé est factorisée en plusieurs classes. Les classes implémentent les algorithmes d’historicisation selon la catégorie temporelle :
+
+* HistoricisationTransactionTime : l’historicisation pour un schéma unitemporel de transaction.
+* HistoricisationValidTime : l’historicisation pour un schéma unitemporel de validité.
+* HistoricisationBitemporalTime : l’historicisation pour un schéma bitemporel de transaction.
+
+Chaque classe implémente les méthodes suivantes :
+
+`getHistoricizedSchema()` : obtenir le schéma historicisé.
+
+`buildUHFDefinedTypeSet()`: construit les types temporels de transaction ou de validité (intervalle ou point).
+
+`decompose(Relvar r)`: décompose une variable de relation en plusieurs parties selon la catégorie temporelle choisie dans le fichier de configuration.
+
+`Historicize` est la classe qui gère le processus d’historicisation.
+
+
+
+== Generator Module
+
+Le module de génération de code utilise la logithèque StringTemplate.
+Chaque instruction SQL un gabarit (_template_) est défini dans un fichier .stg. Pour chaque gabarit une méthode en Java est développée pour instancier un gabarit selon les arguments spécifiés. Ensuite, les générateurs orchestrent la création des scripts SQL selon le modèle et le SGBD cible.
+
+=== Class diagram
+
+
+image::_fig/Class_Diag/generator_factory.png[]
+image::_fig/Class_Diag/generator_statements.png[]
+
+=== Design patterns used
+
+
+
+=== Les gabarits SQL
+Le fichier SSQL.stg regroupe les gabarits communs à plusieurs SGBD. La classe `SqlTemplate` l’implémentation du fichier SSQL.stg.
+
+Le fichier PostgresSQL.stg regroupe les gabarits compatibles à PostgreSQL. La classe `PosgreSqlTemplate` l’implémentation du fichier PostgreSQL.stg.
+
+=== Les générateurs SQL
+La classe `SqlGenerator`, est responsable de créer les fichiers SQL communs à plusieurs SGBD. Elle comporte les méthodes qui appellent les gabarits de `SqlTemplate`.
+
+La classe `UhfSqlGenerator`, il génère les fichiers SQL pour le schéma historicisé selon le modèle temporel UHF.
+La classe `BcdmSqlGenerator`, il génère les fichiers SQL pour le schéma historicisé selon le modèle temporel BCDM.
+La classe `DdlmSqlGenerator`, il génère les fichiers SQL pour le schéma historicisé selon le modèle temporel DDLM.

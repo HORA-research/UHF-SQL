@@ -1,0 +1,36 @@
+= Demonstration
+
+A database example for the software demonstration.
+
+== Supplier-Part
+
+Prerequisites:
+
+* A PostgreSQL database containing the UHF-base library.
+* Java 14+ installé.
+
+Steps :
+
+1. Initialize the database and user by executing the `demo/Supplier-Part/src/use_cre.sql` file.
+2. Build the schema by executing the `demo/Supplier-Part/src/table_cre.sql` file.
+3. Modify the configuration as needed (`demo/Supplier-Part/configuration/config.yaml`)
+4. Execute the following command in a terminal::
+   `java -jar uhf-sql-0.2.0-SNAPSHOT.jar demo/Supplier-Part/configuration/config.yaml`
+
+== mimiciv_hosp
+
+Prerequisites:
+
+* A PostgreSQL database containing the UHF-base library.
+* Java 14+ installé.
+
+Steps :
+
+1. Initialize the database and user by executing the `demo/mimiciv_hosp/sql/use_cre.sql` file.
+2. Build the schema by executing the `demo/mimiciv_hosp/sql/table_cre.sql` and `demo/mimiciv_hosp/sql/constraint.sql` files.
+3. Modify the configuration as needed (`demo/mimiciv_hosp/configuration/config.yaml`)
+4. Execute the following command in a terminal::
+`java -jar uhf-sql-0.2.0-SNAPSHOT.jar demo/mimiciv_hosp/configuration/config.yaml`
+
+
+

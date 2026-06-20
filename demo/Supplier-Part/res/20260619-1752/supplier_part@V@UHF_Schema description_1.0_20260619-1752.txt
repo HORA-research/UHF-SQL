@@ -1,0 +1,75 @@
+RELVAR p@V
+  {pno@N BPCHAR(3), name@N VARCHAR(30)}
+  KEY {pno}
+  REF {}
+  RELPART p_sinceVbx
+    {pno@N BPCHAR(3), sinceVbx VBX_POINT}
+   KEY {pno} 
+  RELPART p_name_sinceVbx
+    {pno@N BPCHAR(3), name@N VARCHAR(30), sinceVbx VBX_POINT}
+   KEY {pno} 
+  RELPART p_duringVbe
+    {pno@N BPCHAR(3), duringVbe VBE_INTERVAL}
+   KEY {pno, during} 
+  RELPART p_name_duringVbe
+    {pno@N BPCHAR(3), name@N VARCHAR(30), duringVbe VBE_INTERVAL}
+   KEY {pno, during} 
+  RELPART p_untilVxe
+    {pno@N BPCHAR(3), untilVxe VXE_POINT}
+   KEY {pno} 
+  RELPART p_name_untilVxe
+    {pno@N BPCHAR(3), name@N VARCHAR(30), untilVxe VXE_POINT}
+   KEY {pno} 
+RELVAR s@V
+  {sno@N BPCHAR(3), status@N INT4, city@N VARCHAR(30)}
+  KEY {sno}
+  REF {}
+  RELPART s_sinceVbx
+    {sno@N BPCHAR(3), sinceVbx VBX_POINT}
+   KEY {sno} 
+  RELPART s_status_sinceVbx
+    {sno@N BPCHAR(3), status@N INT4, sinceVbx VBX_POINT}
+   KEY {sno} 
+  RELPART s_city_sinceVbx
+    {sno@N BPCHAR(3), city@N VARCHAR(30), sinceVbx VBX_POINT}
+   KEY {sno} 
+  RELPART s_duringVbe
+    {sno@N BPCHAR(3), duringVbe VBE_INTERVAL}
+   KEY {sno, during} 
+  RELPART s_status_duringVbe
+    {sno@N BPCHAR(3), status@N INT4, duringVbe VBE_INTERVAL}
+   KEY {sno, during} 
+  RELPART s_city_duringVbe
+    {sno@N BPCHAR(3), city@N VARCHAR(30), duringVbe VBE_INTERVAL}
+   KEY {sno, during} 
+  RELPART s_untilVxe
+    {sno@N BPCHAR(3), untilVxe VXE_POINT}
+   KEY {sno} 
+  RELPART s_status_untilVxe
+    {sno@N BPCHAR(3), status@N INT4, untilVxe VXE_POINT}
+   KEY {sno} 
+  RELPART s_city_untilVxe
+    {sno@N BPCHAR(3), city@N VARCHAR(30), untilVxe VXE_POINT}
+   KEY {sno} 
+RELVAR sp@V
+  {sno@N BPCHAR(3), pno@N BPCHAR(3), qty@N INT4}
+  KEY {sno, pno}
+  REF {sp{pno} --> p{pno},sp{sno} --> s{sno}}
+  RELPART sp_sinceVbx
+    {sno@N BPCHAR(3), pno@N BPCHAR(3), sinceVbx VBX_POINT}
+   KEY {sno, pno} 
+  RELPART sp_qty_sinceVbx
+    {sno@N BPCHAR(3), pno@N BPCHAR(3), qty@N INT4, sinceVbx VBX_POINT}
+   KEY {sno, pno} 
+  RELPART sp_duringVbe
+    {sno@N BPCHAR(3), pno@N BPCHAR(3), duringVbe VBE_INTERVAL}
+   KEY {sno, pno, during} 
+  RELPART sp_qty_duringVbe
+    {sno@N BPCHAR(3), pno@N BPCHAR(3), qty@N INT4, duringVbe VBE_INTERVAL}
+   KEY {sno, pno, during} 
+  RELPART sp_untilVxe
+    {sno@N BPCHAR(3), pno@N BPCHAR(3), untilVxe VXE_POINT}
+   KEY {sno, pno} 
+  RELPART sp_qty_untilVxe
+    {sno@N BPCHAR(3), pno@N BPCHAR(3), qty@N INT4, untilVxe VXE_POINT}
+   KEY {sno, pno} 

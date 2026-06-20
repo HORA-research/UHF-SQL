@@ -1,0 +1,20 @@
+# === Database connection parameters
+srcServer:
+  - rdbms: postgresql
+    host: localhost
+    port: 5432
+    rdbmsPath: /Applications/Postgres.app/Contents/Versions/17/bin/psql
+    databaseId: uhf
+    schemaId: mimiciv_hosp
+    user: uhf
+    pass: uhf
+
+# === Historicization parameters
+temporalModel: UHF # (BCDM, DDLM, UHF)
+schemaTemporalCategory: V # (V, T, VT)
+author: uhf
+outDirPath: demo/mimiciv_hosp/res
+version: 1.0
+includeVxx: false
+executeScript: true
+useMode: physical # (virtual, physical, both)
