@@ -217,8 +217,8 @@ create aggregate "iMin_agg" ("UHF"."Interval") (
             stype = "UHF"."Interval",
   --INTG--  initcond = "UHF"."interval_max"(),
   --INT2--  initcond = '[32766,32767)',
-  --INT4--  initcond = '[2147483646,2147483647)',
-  /*INT8*/  initcond = '[9223372036854775806,9223372036854775807)',
+  /*INT4*/  initcond = '[2147483646,2147483647)',
+  --INT8--  initcond = '[9223372036854775806,9223372036854775807)',
             sfunc = "iMin_func"
           --finalfunc = aucune
   );
@@ -245,8 +245,8 @@ create aggregate "iMax_agg" ("UHF"."Interval") (
             stype = "UHF"."Interval",
   --INTG--  initcond = "UHF"."interval_min"(),
   --INT2--  initcond = '[-32768,-32767)',
-  --INT4--  initcond = '[-2147483648,-2147483647)',
-  /*INT8*/  initcond = '[-9223372036854775808,-9223372036854775807)',
+  /*INT4*/  initcond = '[-2147483648,-2147483647)',
+  --INT8--  initcond = '[-9223372036854775808,-9223372036854775807)',
             sfunc = "iMax_func"
           --finalfunc = aucune
   );

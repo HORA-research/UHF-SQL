@@ -4,16 +4,16 @@ Encodage : UTF-8, sans BOM, fin de ligne Unix (LF)
 Plateform : PostgreSQL 9.6+
 Version : 1.0.0a
 Statut : stable
-Objet : Création de l'utilisateur BD pour l'exemple mimiciv_hosp
+Objet : Création de la BD et de l'utilisateur
 -- =========================================================================== A
 */
 --
-
+-- Création de la base de données
+create database uhf owner uhf;
+--
+-- Création utilisateur
 create user uhf with password 'uhf';
 comment on role uhf is 'Utilisateur pour tester UHF';
-GRANT USAGE, CREATE ON SCHEMA "UHF" TO uhf;
-
-CREATE DATABASE uhf OWNER uhf;
 --
 /*
 -- =========================================================================== Z
@@ -25,8 +25,7 @@ Tâches projetées :
 Tâches réalisées :
   2026-02-06 (CK) : 2026-02-25
 
-Références :
 -- -----------------------------------------------------------------------------
--- Fin de user_cre.sql
+-- Fin de UHF-db-user_cre.sql
 -- =========================================================================== Z
 */

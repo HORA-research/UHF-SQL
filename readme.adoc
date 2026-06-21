@@ -1,0 +1,130 @@
+= UHF-SQL
+
+UHF-SQL is a generator of temporal relational schemas in SQL.
+It automatically transforms a non-historicized schema into a historicized schema based on various temporal models.
+
+The software supports the following three models:
+
+* UHF (Unified-Historization Framework)
+
+* BCDM (Bitemporal Conceptual Data Model)
+
+* DDLM (Date Darwen Lorentzos temporal data Model)
+
+The software supports the following temporal dimensions:
+
+* Valid Time (V)
+
+* Transaction Time (T)
+
+* Bitemporal (VT)
+
+== Environnement
+
+UHF-SQL is developed in Java (compatible with Java 17) using the following external libraries:
+
+* [PostgreSQL Driver](https://www.postgresql.org)
+* [SchemaCrawler](https://www.schemacrawler.com)
+* [JGraphT](https://jgrapht.org)
+* [ANTLR](https://www.antlr.org)
+* [jOOQ](https://www.jooq.org)
+* [JUnit Jupiter](https://junit.org)
+* [Testcontainers PostgreSQL](https://java.testcontainers.org/modules/databases/postgres)
+
+=== Inputs
+
+The software takes as input a configuration file containing
+database connection settings and modelling parameters:
+
+* Database connection information.
+* The desired temporal model (UHF | BCDM | DDLM).
+* The desired temporal category of the historical schema (V | T | VT).
+* The person responsible for the generated schema.
+* The version of the generated schema.
+* Whether to generate Vxx partitions or not.
+* Whether to execute the scripts directly in the database or not.
+* The implementation mode of the historicized schema ((virtual | physical | both; for creating tables or views)
+* If `virtual`, define the temporal functional dependencies
+* Output directory for the generated scripts.
+
+=== Outputs
+
+The software generates a set of scripts for the historicized schema:
+
+* Creation of the schema.
+* Creation of domains.
+* Creating the tables.
+* Creating constraints related to temporal anomalies.
+* Creating historicized views based on temporal partitions.
+* Creating historicized views based on temporal functional dependencies.
+* Creating views associated with temporal anomalies.
+* Creating functions to validate temporal anomalies.
+* Deleting domains and tables.
+
+=== Usage
+
+Prerequisites:
+
+* Serveur PostgreSQL
+* Java 14+
+
+Steps :
+
+. Download the executable file (or the whole repository)
+. In a terminal run: +
+   `java -jar uhf-sql-0.2.0-SNAPSHOT.jar src/test/resources/test-data/configuration/config.yaml`
+
+=== TODO 
+
+== Team members
+
+For more information, please contact: + 
+Christina Khnaisser : Christina.Khnaisser@usherbrooke.ca
+
+Collaborators : +
+Luc Lavoie   : Luc.Lavoie@usherbrooke.ca +
+Zeineb Zaiet : Zeineb.Zaiet@usherbrooke.ca
+
+Thanks to : +
+Rémi Letourneau : Remi.Letourneau@usherbrooke.ca +
+Maiva Schela Magnifouet Zefack : Maiva.Schela.Magnifouet.zefack@usherbrooke.ca +
+Sonia Rykiel Toukam : Sonia.Rykiel.toukam@usherbrooke.ca
+
+== Références
+
+Khnaisser, Christina, Hind Hamrouni, David B. Blumenthal, Anton Dignös, et Johann Gamper. « Querying
+Temporal Anomalies
+in Healthcare Information Systems and Beyond ». In Advances in Databases and Information Systems,
+édité par Silvia
+Chiusano, Tania Cerquitelli, et Robert Wrembel, 13389:209‑22. Lecture Notes in Computer Science.
+Cham: Springer
+International Publishing, (2022).
+https://doi.org/10.1007/978-3-031-15740-0_16.
+
+Khnaisser, Christina. « Construction de modèles de données relationnels temporalisés guidée par les
+ontologies ».
+Université de Paris cotutelle Université de Sherbrooke, (2019).
+https://savoirs.usherbrooke.ca/handle/11143/16329.
+
+Khnaisser, Christina, Luc Lavoie, Anita Burgun, et Jean-François Ethier. « Past Indeterminacy in
+Data Warehouse Design
+». In Database and Expert Systems Applications, 90‑100. Lecture Notes in Computer Science. Springer,
+Cham, (2017).
+https://doi.org/10.1007/978-3-319-64471-4_9.
+
+Christina Khnaisser, Hind Hamrouni, David B. Blumenthal, Anton Dignös et Johann Gamper. « Efficiently Labeling and Retrieving Temporal Anomalies
+in Relational Databases ». Information Systems Frontiers, 1-25.
+https://doi.org/10.1007/s10796-024-10495-w
+
+== Copyright et licenses
+
+Copyright 2026-{localyear}
+HORA - Research group on Temporal modelling and integration of heterogeneous data; +
+Faculté des sciences et Faculté de médecine et sciences de la santé; 
+Université de Sherbrooke (Québec) J1K 2R1 CANADA +
+
+Code license :
+[LILIQ-R+ version 1.1](https://forge.gouv.qc.ca/licence/en/liliq-v1-1/#strong-reciprocity-liliq-r)
+
+Documentation licence :
+[Creative Common CC BY SA](https://creativecommons.org/licenses/by-sa/4.0/legalcode)

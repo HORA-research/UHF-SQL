@@ -1,35 +1,41 @@
 = Demonstration
 
-A database example for the software demonstration.
+Database examples for the software demonstration.
+
+== Prerequisites
+
+Softwares : 
+
+* PostgreSQL database
+* Java 14+ 
+* [optional] DB client (pgAdmin or DataGrip).
+
+For PostgreSQL we have a set of utility functions to create.
+Using a PostgreSQL user with CREATE DATABASE privileges. 
+
+. Execute `UHF-base_build.sh`
+
+For the demonstration purpose, one database (uhf) is used.
+Each example will be stored in a different schema.
 
 == Supplier-Part
 
-Prerequisites:
-
-* A PostgreSQL database containing the UHF-base library.
-* Java 14+ installé.
-
-Steps :
-
-1. Initialize the database and user by executing the `demo/Supplier-Part/src/use_cre.sql` file.
-2. Build the schema by executing the `demo/Supplier-Part/src/table_cre.sql` file.
-3. Modify the configuration as needed (`demo/Supplier-Part/configuration/config.yaml`)
-4. Execute the following command in a terminal::
+. Build the initial schema :
+.. In a DB IDE execute `demo/Supplier-Part/src/table_cre.sql` **OR**
+.. In a terminal: `psql -d uhf -f demo/Supplier-Part/src/table_cre.sql`
+. Modify the configuration if needed: +
+`demo/Supplier-Part/configuration/config.yaml`
+. Execute UHF-SQL in a terminal: +
    `java -jar uhf-sql-0.2.0-SNAPSHOT.jar demo/Supplier-Part/configuration/config.yaml`
 
-== mimiciv_hosp
+== MIMIC-IV Hosp 
 
-Prerequisites:
-
-* A PostgreSQL database containing the UHF-base library.
-* Java 14+ installé.
-
-Steps :
-
-1. Initialize the database and user by executing the `demo/mimiciv_hosp/sql/use_cre.sql` file.
-2. Build the schema by executing the `demo/mimiciv_hosp/sql/table_cre.sql` and `demo/mimiciv_hosp/sql/constraint.sql` files.
-3. Modify the configuration as needed (`demo/mimiciv_hosp/configuration/config.yaml`)
-4. Execute the following command in a terminal::
+. Build the initial schema :
+.. `demo/mimiciv_hosp/sql/table_cre.sql` and 
+.. `demo/mimiciv_hosp/sql/constraint.sql`.
+. Modify the configuration if needed: +
+`demo/mimiciv_hosp/configuration/config.yaml`
+. Execute UHF-SQL in a terminal: +
 `java -jar uhf-sql-0.2.0-SNAPSHOT.jar demo/mimiciv_hosp/configuration/config.yaml`
 
 

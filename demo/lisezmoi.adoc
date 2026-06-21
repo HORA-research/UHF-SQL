@@ -1,0 +1,42 @@
+= Demonstration
+
+Des exemples de base de données pour la démonstration du logiciel.
+
+== Prerequisites
+
+Logiciels : 
+
+* Serveur PostgreSQL 
+* Java 14+ 
+* [optionel] Un client de BD (pgAdmin or DataGrip).
+
+Pour PostgreSQL, nous devons créer un ensemble de fonctions utilitaires.
+Avec un utilisateur PostgreSQL disposant des privilèges CREATE DATABASE. 
+
+. Executer `UHF-base_build.sh`
+
+À des fins de démonstration, une seule base de données (uhf) est utilisée.
+Chaque exemple est stocké dans un schéma différent.
+
+== Supplier-Part
+
+. Constuire le schéma initial :
+.. Dans un client BD executer le fichier : `demo/Supplier-Part/src/table_cresql`. **OU**
+.. Dans un terminal : `psql -d uhf -f demo/Supplier-Part/src/table_cre.sql`
+. Modifier le fichier de caonfiguration au besoin : +
+`demo/Supplier-Part/configuration/config.yaml`
+. Exécuter UHF-SQL dans un terminal : +
+   `java -jar uhf-sql-0.2.0-SNAPSHOT.jar demo/Supplier-Part/configuration/config.yaml`
+
+== MIMIC-IV Hosp 
+
+. Constuire le schéma initial :
+.. `demo/mimiciv_hosp/sql/table_cre.sql` and 
+.. `demo/mimiciv_hosp/sql/constraint.sql`.
+. Modifier le fichier de caonfiguration au besoin  : +
+`demo/mimiciv_hosp/configuration/config.yaml`
+. Exécuter UHF-SQL dans un terminal : +
+`java -jar uhf-sql-0.2.0-SNAPSHOT.jar demo/mimiciv_hosp/configuration/config.yaml`
+
+
+

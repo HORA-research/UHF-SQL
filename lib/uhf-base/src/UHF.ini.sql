@@ -411,6 +411,7 @@ $$;
 
 -- Établissement du schéma de référence
 set schema 'UHF' ;
+grant usage, create on schema "UHF" to uhf;
 
 -- Ajout l’extension GiST à la BD courante
 create extension if not exists "btree_gist";
