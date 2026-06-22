@@ -21,7 +21,7 @@ The algorithm generates a historicized schema in 6NF, where the key induces the 
 
 .Naming of valid-time unitemporal partitions.
 |===
-|Catégorie | Type alias:domaine   | Identifiant du relpart
+|Category | Alias type:domain   | Relpart identifier
 | Vbx      | since:Vbx_POINT      | <id_relvar>_since
 | Vbe      | during:Vbe_INTERVAL  | <id_relvar>_during
 | Vxe      | until:Vxe_POINT      | <id_relvar>_until
@@ -48,7 +48,7 @@ image::_fig/relparts/uhf_V.png[]
 
 .Naming of transaction-time unitemporal partitions.
 |===
-|Catégorie | Type alias:domaine     | Identifiant du relpart
+|Category | Alias type:domain     | Relpart identifier
 | Tbx      | created:Tbx_POINT      | <id_relvar>_created
 | Tbe      | lifespan:Tbe_INTERVAL  | <id_relvar>_lifespan
 |===

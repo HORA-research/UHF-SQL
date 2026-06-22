@@ -18,6 +18,13 @@ Avec un utilisateur PostgreSQL disposant des privilèges CREATE DATABASE.
 À des fins de démonstration, une seule base de données (uhf) est utilisée.
 Chaque exemple est stocké dans un schéma différent.
 
+[NOTE]
+====
+Le paramètre `rdbmsPath` dans le fichier de configuration doit être adapté selon le chemin d'installation de PostgreSQL sur votre machine. Par exemple :
+
+* macOS (Postgres.app) : `/Applications/Postgres.app/Contents/Versions/17/bin/psql`
+====
+
 == Supplier-Part
 
 . Constuire le schéma initial :

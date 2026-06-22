@@ -18,6 +18,13 @@ Using a PostgreSQL user with CREATE DATABASE privileges.
 For the demonstration purpose, one database (uhf) is used.
 Each example will be stored in a different schema.
 
+[NOTE]
+====
+The `rdbmsPath` parameter in the configuration file must be adapted to your PostgreSQL installation path. For example:
+
+* macOS (Postgres.app) : `/Applications/Postgres.app/Contents/Versions/17/bin/psql`
+====
+
 == Supplier-Part
 
 . Build the initial schema :

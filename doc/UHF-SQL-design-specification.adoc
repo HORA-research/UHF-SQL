@@ -17,6 +17,9 @@ This document serves as the sole applicable functional reference upon which the 
 
 The {produit} program is divided into four modules: configuration, generator, model, and process.
 
+image::_fig/architecture.png[]
+
+
 ===  Configuration Module
 
 The configuration module groups all the classes needed to retrieve connection information and historicization parameters.
@@ -84,26 +87,23 @@ useMode: virtual # (virtual, physical, both)
    - `both` : jointly generates both _physical_ and _virtual_ modes.
 
 
-== Class diagram
-image::_fig/Class_Diag/configuration.png[]
-
-
-== Design patterns used
+=== Class diagram
 The Strategy pattern is used for connection handling, allowing different
 RDBMS connection strategies to be plugged in.
 
-== Module du modèle
+image::_fig/Class_Diag/configuration.png[]
+
+== Model module
 
 The model module contains the main class `Schema`.
 
 `Schema` represents a relational schema composed of relation variables (`Relvar`) and their temporal partitions  (`Relpart`), referential constraints (`ReferentialKey`), defined types and predefined types and temporal functional dependencies.
 
-Une dépendance fonctionnelle est une contrainte entre deux ensembles d’attributs, un ensemble déterminant et un ensemble dépendant.
 A functional dependency is a constraint between two sets of attributes, a determining set and a dependent set. For a relation R(X,Y,Z) where X, Y and Z are subsets of the set of attributes, a functional dependency (FD) from X to Y, denoted X → Y, is said to exist if each value of X corresponds to at most one value of Y (i.e., zero or one).
 A temporal functional dependency (TFD) is an FD with the addition of one or more temporal attributes to the determining set.
 
 === Class diagram
-
+image::_fig/Class_Diag/model.png[]
 
 == Process Module
 The Strategy pattern is used for the historicization process, where the selected temporal model and temporal category determine which temporal categories are applied and how relparts are generated.
@@ -111,47 +111,44 @@ The Strategy pattern is used for the historicization process, where the selected
 === Class diagram
 image::_fig/Class_Diag/process.png[]
 
+=== Sequence diagram
+The execution starts by loading the configuration file, the tool loads the connection and historization parameters using the DatabaseConfig class.
+The existing database structure is then parsed and built into a relational model structure (BuildSchema), which is passed to the Historicize class that normalizes
+the schema and construct the corresponding historicized schema. The temporal schema is then passed to the SQL generator corresponding to the selected
+temporal model, which produces the SQL scripts. Finally, if executeScript = true, the generated scripts are executed against the target database.
+
+image::_fig/uhf_sql_sequence.png[]
+
+=== Non-historicized schema construction
+
+The construction of the non-historicized schema consists of instantiating the model classes from the existing elements in a database. The construction uses the _SchemaCrawler_ library for connection and information retrieval.
+Tables are represented by relation variables (relvar).
+
+=== Construction of the historicized schema
+
+The construction of a historicized schema is factored into several classes.
+The classes implement the historicization algorithms according to the temporal category:
+
+* `HistoricisationValidTime` : historicization for a valid-time unitemporal schema.
+* `HistoricisationTransactionTime` : historicization for a transaction-time unitemporal schema.
+* `HistoricisationBitemporalTime` : historicization for a bitemporal schema.
+
+Each class implements the following methods from the `Historicisation` interface:
+
+* `executeT()` : builds the temporal defined types (interval or point) for the target temporal category.
+* `executeR(Relvar r)` : decomposes a relation variable into partitions according to the target temporal category.
+
+The temporal model-specific classes `Uhf`, `Bcdm` and `Ddlm` implement the decomposition algorithms specific to each temporal model:
 
 
-À partir du fichier de configuration, le programme va charger les valeurs des paramètres dans la classe `DatabaseConfig`.
- Ensuite, le schéma existant (srcSchema) est construit les instances des classes du modèle (`BuildSchema`).
-L’instance de cette classe est retournée au Main pour initialiser la classe `Historicize` qui va créer un schéma historicisé du schéma de source (`outSchema`).
-Ensuite le schéma historicisé est envoyé à la classe `uhfSqlGenerator` pour créer les fichiers SQL correspondants.
-Finalement, si executeScript = true, les fichiers sont exécutés dans la base de données source.
+* `decomposeV(Relvar r)` : decomposes a relation variable according to the valid-time category.
+* `decomposeT(Relvar r)` : decomposes a relation variable according to the transaction-time category.
+* `decomposeVT(Relvar r)` : decomposes a relation variable according to the bitemporal category.
+* `buildValidTime()` : builds the valid-time temporal types.
+* `buildTransactionTime()` : builds the transaction-time temporal types.
+* `buildBitemporalTime()` : builds the bitemporal temporal types.
 
-.Diagramme de séquence
-[plantuml,target=sequence,format=png]
-----
-include::_fig/UHF-SQL_sequence.puml[]
-----
-
-=== Construction du schéma non historicisé
-
-La construction du schéma non historicisé consiste à instancier les classes du modèle à partir des éléments existant dans une base de données.
-
-La construction utilise la librairie _SchemaCrawler_ pour la connexion et la récupération des informations.
-
-Les tables sont représentées par les variables de relations.
-
-=== Construction du schéma historicisé
-
-La construction d’un schéma historicisé est factorisée en plusieurs classes. Les classes implémentent les algorithmes d’historicisation selon la catégorie temporelle :
-
-* HistoricisationTransactionTime : l’historicisation pour un schéma unitemporel de transaction.
-* HistoricisationValidTime : l’historicisation pour un schéma unitemporel de validité.
-* HistoricisationBitemporalTime : l’historicisation pour un schéma bitemporel de transaction.
-
-Chaque classe implémente les méthodes suivantes :
-
-`getHistoricizedSchema()` : obtenir le schéma historicisé.
-
-`buildUHFDefinedTypeSet()`: construit les types temporels de transaction ou de validité (intervalle ou point).
-
-`decompose(Relvar r)`: décompose une variable de relation en plusieurs parties selon la catégorie temporelle choisie dans le fichier de configuration.
-
-`Historicize` est la classe qui gère le processus d’historicisation.
-
-
+`Historicize` is the class that manages the historicization process, selecting the appropriate temporal model and category based on the configuration.
 
 == Generator Module
 
@@ -159,22 +156,18 @@ The code generation module uses the StringTemplate library.
 Each SQL statement is defined as a template in a .stg file. For each template, a Java method is developed to instantiate the template with the specified arguments. The generators then orchestrate the creation of the SQL scripts according to the target model and DBMS.
 
 === Class diagram
-
-
-image::_fig/Class_Diag/generator_factory.png[]
-image::_fig/Class_Diag/generator_statements.png[]
-
-=== Design patterns used
-
 The Factory Method pattern is used for SQL script generation, where a provider
 selects and instantiates the appropriate generator factory at runtime, based on
 the configured temporal model.
 
+image::_fig/Class_Diag/generator_factory.png[]
+image::_fig/Class_Diag/generator_statements.png[]
 
 === SQL Templates
 The `SSQL.stg` file groups the templates common to multiple DBMS. The `SqlTemplate` class implements the `SSQL.stg` file.
 
 The `PostgreSQL.stg` file groups the templates compatible with PostgreSQL. The `PostgreSqlTemplate` class implements the `PostgreSQL.stg` file.
+
 === SQL Generators
 The `SqlGenerator` class is responsible for generating SQL files common to multiple DBMS. It contains the methods that call the templates from `SqlTemplate`.
 

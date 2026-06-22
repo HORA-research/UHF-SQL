@@ -19,7 +19,7 @@ The software supports the following temporal dimensions:
 
 * Bitemporal (VT)
 
-== Environnement
+== Environment
 
 UHF-SQL is developed in Java (compatible with Java 17) using the following external libraries:
 
@@ -59,7 +59,7 @@ The software generates a set of scripts for the historicized schema:
 * Creating historicized views based on temporal functional dependencies.
 * Creating views associated with temporal anomalies.
 * Creating functions to validate temporal anomalies.
-* Deleting domains and tables.
+* Dropping domains and tables.
 
 === Usage
 
@@ -72,9 +72,15 @@ Steps :
 
 . Download the executable file (or the whole repository)
 . In a terminal run: +
-   `java -jar uhf-sql-0.2.0-SNAPSHOT.jar demo/Supplier-Part/configuration/config.yaml`
+   `java -jar uhf-sql-0.2.0-SNAPSHOT.jar <configuration-file>`
 
 === TODO 
+
+* Creation of functions for checking temporal foreign keys for the transaction-time (T) and bitemporal (VT) schema temporal categories.
+* Creation of functions for checking temporal foreign keys for the valid-time (V) category for BCDM and DDLM models.
+* Creation of views associated with temporal anomalies and constraints related to temporal anomalies for the bitemporal (VT) schema temporal category.
+* Support for the Vxx temporal partition when `includeVxx` is set to `true`.
+* Generation of the complete schema when `useMode` is set to `virtual`.
 
 == Team members
 
@@ -90,7 +96,7 @@ Rémi Letourneau : Remi.Letourneau@usherbrooke.ca +
 Maiva Schela Magnifouet Zefack : Maiva.Schela.Magnifouet.zefack@usherbrooke.ca +
 Sonia Rykiel Toukam : Sonia.Rykiel.toukam@usherbrooke.ca
 
-== Références
+== References
 
 Khnaisser, Christina, Hind Hamrouni, David B. Blumenthal, Anton Dignös, et Johann Gamper. « Querying
 Temporal Anomalies

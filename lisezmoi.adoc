@@ -61,9 +61,15 @@ Le logiciel génère un ensemble de scripts pour le schéma historicisé :
 * La création des fonctions de vérifications des anomalies temporelles.
 * La suppression des domaines et des tables.
 
-=== TODO 
+=== TODO
 
-=== Utilisation client
+* Création des fonctions de vérification des clés référentielles temporelles pour les catégories temporelles transaction (T) et bitemporelle (VT).
+* Création des fonctions de vérification des clés référentielles temporelles pour la catégorie de validité (V) pour les modèles BCDM et DDLM.
+* Création des vues associées aux anomalies temporelles et des contraintes liées aux anomalies temporelles pour la catégorie temporelle bitemporelle (VT).
+* Support de la partition temporelle Vxx lorsque `includeVxx` est à `true`.
+* Génération du schéma complet lorsque `useMode` est à `virtual`.
+
+=== Utilisation
 
 Les pré-requis :
 
@@ -74,7 +80,7 @@ Les étapes :
 
 . Télécharger l'exécutable (ou le dépôt au complet).
 . Dans un terminal exécuter : +
-   `java -jar uhf-sql-0.2.0-SNAPSHOT.jar src/test/resources/test-data/configuration/config.yaml`
+   `java -jar uhf-sql-0.2.0-SNAPSHOT.jar <fichier-de-configuration>`
 
 == Équipe
 
