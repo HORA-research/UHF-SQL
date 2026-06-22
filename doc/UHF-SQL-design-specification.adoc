@@ -9,7 +9,7 @@ Zeineb Zaiet <Zeineb.Zaiet@usherbrooke.ca>
 
 == Introduction
 
-This document describes the design of the product {product} developed within the framework of the UHF project. Its main objective is to present and justify the necessary and sufficient modeling required to historicize a relational schema.
+This document describes the design of the product {produit} developed within the framework of the UHF project. Its main objective is to present and justify the necessary and sufficient modeling required to historicize a relational schema.
 
 This document serves as the sole applicable functional reference upon which the product's architecture and design will be established. It is intended for the project owner, the project manager, the quality assurance group, the testing managers, and all members of the development team.
 
@@ -89,6 +89,8 @@ image::_fig/Class_Diag/configuration.png[]
 
 
 == Design patterns used
+The Strategy pattern is used for connection handling, allowing different
+RDBMS connection strategies to be plugged in.
 
 == Module du modèle
 
@@ -104,7 +106,7 @@ A temporal functional dependency (TFD) is an FD with the addition of one or more
 
 
 == Process Module
-
+The Strategy pattern is used for the historicization process, where the selected temporal model and temporal category determine which temporal categories are applied and how relparts are generated.
 
 === Class diagram
 image::_fig/Class_Diag/process.png[]
@@ -117,7 +119,7 @@ L’instance de cette classe est retournée au Main pour initialiser la classe `
 Ensuite le schéma historicisé est envoyé à la classe `uhfSqlGenerator` pour créer les fichiers SQL correspondants.
 Finalement, si executeScript = true, les fichiers sont exécutés dans la base de données source.
 
-.Diagramme de séquence des processus
+.Diagramme de séquence
 [plantuml,target=sequence,format=png]
 ----
 include::_fig/UHF-SQL_sequence.puml[]
@@ -153,8 +155,8 @@ Chaque classe implémente les méthodes suivantes :
 
 == Generator Module
 
-Le module de génération de code utilise la logithèque StringTemplate.
-Chaque instruction SQL un gabarit (_template_) est défini dans un fichier .stg. Pour chaque gabarit une méthode en Java est développée pour instancier un gabarit selon les arguments spécifiés. Ensuite, les générateurs orchestrent la création des scripts SQL selon le modèle et le SGBD cible.
+The code generation module uses the StringTemplate library.
+Each SQL statement is defined as a template in a .stg file. For each template, a Java method is developed to instantiate the template with the specified arguments. The generators then orchestrate the creation of the SQL scripts according to the target model and DBMS.
 
 === Class diagram
 
@@ -164,16 +166,18 @@ image::_fig/Class_Diag/generator_statements.png[]
 
 === Design patterns used
 
+The Factory Method pattern is used for SQL script generation, where a provider
+selects and instantiates the appropriate generator factory at runtime, based on
+the configured temporal model.
 
 
-=== Les gabarits SQL
-Le fichier SSQL.stg regroupe les gabarits communs à plusieurs SGBD. La classe `SqlTemplate` l’implémentation du fichier SSQL.stg.
+=== SQL Templates
+The `SSQL.stg` file groups the templates common to multiple DBMS. The `SqlTemplate` class implements the `SSQL.stg` file.
 
-Le fichier PostgresSQL.stg regroupe les gabarits compatibles à PostgreSQL. La classe `PosgreSqlTemplate` l’implémentation du fichier PostgreSQL.stg.
+The `PostgreSQL.stg` file groups the templates compatible with PostgreSQL. The `PostgreSqlTemplate` class implements the `PostgreSQL.stg` file.
+=== SQL Generators
+The `SqlGenerator` class is responsible for generating SQL files common to multiple DBMS. It contains the methods that call the templates from `SqlTemplate`.
 
-=== Les générateurs SQL
-La classe `SqlGenerator`, est responsable de créer les fichiers SQL communs à plusieurs SGBD. Elle comporte les méthodes qui appellent les gabarits de `SqlTemplate`.
-
-La classe `UhfSqlGenerator`, il génère les fichiers SQL pour le schéma historicisé selon le modèle temporel UHF.
-La classe `BcdmSqlGenerator`, il génère les fichiers SQL pour le schéma historicisé selon le modèle temporel BCDM.
-La classe `DdlmSqlGenerator`, il génère les fichiers SQL pour le schéma historicisé selon le modèle temporel DDLM.
+The `UhfSqlGenerator` class generates the SQL files for the historicized schema according to the UHF temporal model.
+The `BcdmSqlGenerator` class generates the SQL files for the historicized schema according to the BCDM temporal model.
+The `DdlmSqlGenerator` class generates the SQL files for the historicized schema according to the DDLM temporal model.

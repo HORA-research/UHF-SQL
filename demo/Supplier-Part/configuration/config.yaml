@@ -2,7 +2,7 @@
 srcServer:
   - rdbms: postgresql
     host: localhost
-    port: 5433
+    port: 5432
     rdbmsPath: /Applications/Postgres.app/Contents/Versions/17/bin/psql
     databaseId: uhf
     schemaId: supplier_part

@@ -15,7 +15,18 @@ in a relation.
 
 == UHF
 
+The algorithm generates a historicized schema in 6NF, where the key induces the creation of a key partition and each attribute induces an attribute partition.
+
 === Valid-time unitemporal schema
+
+.Naming of valid-time unitemporal partitions.
+|===
+|Catégorie | Type alias:domaine   | Identifiant du relpart
+| Vbx      | since:Vbx_POINT      | <id_relvar>_since
+| Vbe      | during:Vbe_INTERVAL  | <id_relvar>_during
+| Vxe      | until:Vxe_POINT      | <id_relvar>_until
+|===
+
 *General formula:* stem:[R] is partitioned into stem:[3 + 3 \times n] relparts
 (where stem:[n] represents the number of non-key attributes):
 
@@ -29,11 +40,18 @@ The following figure illustrates an example of the valid-time unitemporalization
 of a relation according to the UHF model.
 
 [#figuhfV-relparts]
-.Relparts according to the validity category.
+.Relparts according to the valid-time category.
 image::_fig/relparts/uhf_V.png[]
 
 
 === Transaction-time unitemporal schema
+
+.Naming of transaction-time unitemporal partitions.
+|===
+|Catégorie | Type alias:domaine     | Identifiant du relpart
+| Tbx      | created:Tbx_POINT      | <id_relvar>_created
+| Tbe      | lifespan:Tbe_INTERVAL  | <id_relvar>_lifespan
+|===
 
 *General formula:* stem:[R] is partitioned into stem:[2 + 2 \times n] relparts
 (where stem:[n] represents the number of non-key attributes):
@@ -47,12 +65,11 @@ stem:[a_i], and a transaction-time temporal attribute for stem:[a_i].
 The following figure illustrates an example of the transaction-time
 unitemporalization of a relation according to the UHF model.
 
-.Relparts according to the transaction category.
+.Relparts according to the transaction-time category.
 image::_fig/relparts/uhf_T.png[]
 
 
 === Bitemporal schema
-
 *General formula:* stem:[R] is partitioned into stem:[6 + 6 \times n] relparts
 (where stem:[n] represents the number of non-key attributes):
 
@@ -77,6 +94,10 @@ image::_fig/relparts/uhf_VT.png[]
 
 === Valid-time unitemporal schema
 
+The algorithm generates a historicized schema where the key and each attribute induce a partition in 6NF for the @Vbe category.
+For the @Vbx category, for each relvar (source relation) the algorithm generates a single partition in 5NF containing the key attributes,
+a temporal attribute since for the key, and each non-key attribute stem:[a_i] with its corresponding temporal attribute stem:[ai\_since].
+
 *General formula:* stem:[R] is partitioned into stem:[2 + n] relparts
 (where stem:[n] represents the number of non-key attributes):
 
@@ -92,11 +113,13 @@ valid-time temporal attribute stem:[@Vbe].
 The following figure illustrates an example of the valid-time unitemporalization
 of a relation according to the DDLM model.
 
-.Relparts according to the validity category.
+.Relparts according to the valid-time category.
 image::_fig/relparts/ddlm_V.png[]
 
 
 === Transaction-time unitemporal schema
+
+The algorithm generates a historicized schema in 6NF, where the key induces the creation of a key partition and each attribute induces an attribute partition.
 
 *General formula:* stem:[R] is partitioned into stem:[n] relparts
 (where stem:[n] represents the number of non-key attributes):
@@ -108,10 +131,16 @@ transaction-time temporal attribute stem:[@Tbe].
 The following figure illustrates an example of the transaction-time
 unitemporalization of a relation according to the DDLM model.
 
-.Relparts according to the transaction category.
+.Relparts according to the transaction-time category.
 image::_fig/relparts/ddlm_T.png[]
 
 === Bitemporal schema
+The algorithm generates a historicized schema where the key and each attribute induce a partition in
+6NF containing both @Vbe and @Tbe temporal attributes. For the @Vbx category,
+for each relvar (source relation) the algorithm generates a single partition in 5NF
+containing the key attributes, a temporal attribute since for the key,
+each non-key attribute stem:[a_i] with its corresponding temporal attribute stem:[a\_i\_since],
+and a @Tbe temporal attribute.
 
 *General formula:* stem:[R] is partitioned into stem:[2 + n] relparts
 (where stem:[n] represents the number of non-key attributes):
@@ -138,6 +167,9 @@ image::_fig/relparts/ddlm_VT.png[]
 
 == BCDM
 
+The algorithm generates a historicized schema by adding a single temporal attribute
+(@Vbe, @Tbe, @Tbx, @VbeTbx or @VbeTbe) to each source relation depending on the target temporal category.
+
 === Valid-time unitemporal schema
 
 *General formula:* stem:[R] is partitioned into *one* relpart stem:[R@Vbe]
@@ -148,7 +180,7 @@ The following figure illustrates an example of the valid-time unitemporalization
 of a relation according to the BCDM model.
 
 
-.Relparts according to the validity category.
+.Relparts according to the valid-time category.
 image::_fig/relparts/bcdm_V.png[]
 
 
@@ -165,7 +197,7 @@ transaction-time temporal attribute stem:[@Tbx].
 The following figure illustrates an example of the transaction-time
 unitemporalization of a relation according to the BCDM model.
 
-.Relparts according to the transaction category.
+.Relparts according to the transaction-time category.
 image::_fig/relparts/bcdm_T.png[]
 
 
