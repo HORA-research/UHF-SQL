@@ -27,8 +27,9 @@ Le schéma `UHF` contenant les fonctions utilitaires sera créé dans la base de
 ====
 Le paramètre `rdbmsPath` dans le fichier de configuration doit être adapté selon le chemin d'installation de PostgreSQL sur votre machine. Par exemple :
 
-* macOS (Postgres.app) : `/Applications/Postgres.app/Contents/Versions/17/bin/psql`
-* Ubuntu : `usr/lib/bin`
+* macOS (Postgres.app) : `/Applications/Postgres.app/Contents/Versions/<version>/bin/psql`
+* Linux : `/usr/bin/psql`
+* Windows : `C:\Program Files\PostgreSQL\<version>\bin\psql.exe`
 ====
 
 == Supplier-Part

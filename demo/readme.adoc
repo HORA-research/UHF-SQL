@@ -23,14 +23,6 @@ Example: `./lib/uhf-base/UHF-base_build.sh -b postgres`
 
 The `UHF` schema containing the utility functions will be created in the `uhf` database.
 
-[NOTE]
-====
-The `rdbmsPath` parameter in the configuration file must be adapted to your PostgreSQL installation path. For example:
-
-* macOS (Postgres.app) : `/Applications/Postgres.app/Contents/Versions/17/bin/psql`
-* Ubuntu : `usr/lib/bin`
-====
-
 == Supplier-Part
 
 . Build the initial schema :
@@ -38,6 +30,16 @@ The `rdbmsPath` parameter in the configuration file must be adapted to your Post
 .. In a terminal: `psql -d uhf -f demo/Supplier-Part/src/table_cre.sql`
 . Modify the configuration if needed: +
 `demo/Supplier-Part/configuration/config.yaml`
+
+[NOTE]
+====
+The `rdbmsPath` parameter in the configuration file must be adapted to your PostgreSQL installation path. For example:
+
+* macOS (Postgres.app) : `/Applications/Postgres.app/Contents/Versions/<version>/bin/psql`
+* Linux : `/usr/bin/psql`
+* Windows : `C:\Program Files\PostgreSQL\<version>\bin\psql.exe`
+====
+
 . Execute UHF-SQL in a terminal: +
    `java -jar uhf-sql-0.2.0-SNAPSHOT.jar demo/Supplier-Part/configuration/config.yaml`
 
