@@ -27,14 +27,14 @@ The algorithm generates a historicized schema in 6NF, where the key induces the 
 | Vxe      | until:Vxe_POINT      | <id_relvar>_until
 |===
 
-*General formula:* stem:[R] is partitioned into stem:[3 + 3 \times n] relparts
+*General formula:* stem:[R] is partitioned into stem:[3 + 3 × n] relparts
 (where stem:[n] represents the number of non-key attributes):
 
 * *3 partitions:* stem:[R@Vbx], stem:[R@Vbe] and stem:[R@Vxe],
 each containing a corresponding valid-time attribute.
-* stem:[n] partitions stem:[R\_ai\_@Vbx], stem:[n] partitions stem:[R\_ai\_@Vbe] and stem:[n] partitions stem:[R\_ai\_@Vxe]. Each partition contains the key attributes
-of stem:[R], the attribute stem:[a_i], and a valid-time attribute
-corresponding to stem:[a_i].
+* stem:[n] partitions R_a~i~\_@Vbx, stem:[n] partitions R_a~i~_@Vbe and stem:[n] partitions R_a~i~_@Vxe. Each partition contains the key attributes
+of stem:[R], the attribute a~i~, and a valid-time attribute
+corresponding to a~i~.
 
 The following figure illustrates an example of the valid-time unitemporalization
 of a relation according to the UHF model.
@@ -53,14 +53,14 @@ image::_fig/relparts/uhf_V.png[]
 | Tbe      | lifespan:Tbe_INTERVAL  | <id_relvar>_lifespan
 |===
 
-*General formula:* stem:[R] is partitioned into stem:[2 + 2 \times n] relparts
+*General formula:* stem:[R] is partitioned into stem:[2 + 2 × n] relparts
 (where stem:[n] represents the number of non-key attributes):
 
 * *2 partitions:* stem:[R@Tbe] and stem:[R@Tbx],
 each containing a corresponding valid-time attribute.
-* 2 partitions stem:[R\_ai\_@Tbe] and stem:[R\_ai\_@Tbx] for each non-key attribute
-stem:[a_i], each containing the key attributes of stem:[R], the attribute
-stem:[a_i], and a transaction-time temporal attribute for stem:[a_i].
+* 2 partitions R_a~i~\_@Tbe and R_a~i~_@Tbx for each non-key attribute
+a~i~, each containing the key attributes of stem:[R], the attribute
+a~i~, and a transaction-time temporal attribute for a~i~.
 
 The following figure illustrates an example of the transaction-time
 unitemporalization of a relation according to the UHF model.
@@ -70,7 +70,7 @@ image::_fig/relparts/uhf_T.png[]
 
 
 === Bitemporal schema
-*General formula:* stem:[R] is partitioned into stem:[6 + 6 \times n] relparts
+*General formula:* stem:[R] is partitioned into stem:[6 + 6 × n] relparts
 (where stem:[n] represents the number of non-key attributes):
 
 * *6 partitions:* stem:[R@VbxTbx], stem:[R@VbxTbe], stem:[R@VbeTbx], stem:[R@VbeTbe],
@@ -78,10 +78,10 @@ stem:[R@VxeTbx] and stem:[R@VxeTbe], each
 containing the key attributes of stem:[R], a valid-time temporal attribute,
 and a transaction-time temporal attribute.
 
-* *stem:[n] partitions:* stem:[R\_ai\_@VbxTbx], stem:[n] partitions stem:[R\_ai\_@VbxTbe],
-stem:[n] partitions stem:[R\_ai\_@VbeTbx], stem:[n] partitions stem:[R\_ai\_@VbeTbe],
-stem:[n] partitions stem:[R\_ai\_@VxeTbx] and stem:[n] partitions stem:[R\_ai\_@VxeTbe], each containing the key attributes of
-stem:[R], the attribute stem:[a_i], a valid-time temporal attribute, and a
+* *stem:[n] partitions:* R_a~i~\_@VbxTbx, stem:[n] partitions R_a~i~_@VbxTbe,
+stem:[n] partitions R_a~i~\_@VbeTbx, stem:[n] partitions R_a~i~_@VbeTbe,
+stem:[n] partitions R_a~i~\_@VxeTbx and stem:[n] partitions R_a~i~_@VxeTbe, each containing the key attributes of
+stem:[R], the attribute a~i~, a valid-time temporal attribute, and a
 transaction-time temporal attribute.
 
 The following figure illustrates an example of the bitemporalization of a
@@ -96,19 +96,19 @@ image::_fig/relparts/uhf_VT.png[]
 
 The algorithm generates a historicized schema where the key and each attribute induce a partition in 6NF for the @Vbe category.
 For the @Vbx category, for each relvar (source relation) the algorithm generates a single partition in 5NF containing the key attributes,
-a temporal attribute since for the key, and each non-key attribute stem:[a_i] with its corresponding temporal attribute stem:[ai\_since].
+a temporal attribute since for the key, and each non-key attribute a~i~ with its corresponding temporal attribute a~i~_since.
 
 *General formula:* stem:[R] is partitioned into stem:[2 + n] relparts
 (where stem:[n] represents the number of non-key attributes):
 
 * One partition stem:[R@Vbx] containing all attributes of stem:[R], a valid-time
-temporal attribute for each non-key attribute denoted stem:[ai\_@Vbx], and a
+temporal attribute for each non-key attribute denoted a~i~_@Vbx, and a
 valid-time temporal attribute for the key attributes denoted stem:[@Vbx].
 
 * One partition stem:[R@Vbe] containing the key attributes of stem:[R] and a
 valid-time temporal attribute stem:[@Vbe].
 
-* stem:[n] partitions stem:[R\_ai\_@Vbe] for each non-key attribute stem:[a_i].
+* stem:[n] partitions R_a~i~_@Vbe for each non-key attribute a~i~.
 
 The following figure illustrates an example of the valid-time unitemporalization
 of a relation according to the DDLM model.
@@ -126,7 +126,7 @@ The algorithm generates a historicized schema in 6NF, where the key induces the 
 
 * One partition stem:[R@Tbe] containing the key attributes of stem:[R] and a
 transaction-time temporal attribute stem:[@Tbe].
-* stem:[n] partitions stem:[R\_ai\_@Tbe] for each non-key attribute stem:[a_i].
+* stem:[n] partitions R_a~i~_@Tbe for each non-key attribute a~i~.
 
 The following figure illustrates an example of the transaction-time
 unitemporalization of a relation according to the DDLM model.
@@ -139,22 +139,22 @@ The algorithm generates a historicized schema where the key and each attribute i
 6NF containing both @Vbe and @Tbe temporal attributes. For the @Vbx category,
 for each relvar (source relation) the algorithm generates a single partition in 5NF
 containing the key attributes, a temporal attribute since for the key,
-each non-key attribute stem:[a_i] with its corresponding temporal attribute stem:[a\_i\_since],
+each non-key attribute a~i~ with its corresponding temporal attribute a~i~_since,
 and a @Tbe temporal attribute.
 
 *General formula:* stem:[R] is partitioned into stem:[2 + n] relparts
 (where stem:[n] represents the number of non-key attributes):
 
 * One partition stem:[R@VbxTbe] containing all attributes of stem:[R], a valid-time
-temporal attribute stem:[@Vbx] for each non-key attribute (stem:[R\_ai\_@Vbx]), a valid-time temporal
+temporal attribute stem:[@Vbx] for each non-key attribute (R_a~i~_@Vbx), a valid-time temporal
 attribute stem:[@Vbx] for the key attributes, and a transaction-time temporal
 attribute stem:[@Tbe].
 
 * One partition stem:[R@VbeTbe] containing the key attributes of stem:[R], a valid-time
 temporal attribute stem:[@Vbe], and a transaction-time temporal attribute stem:[@Tbe].
 
-* stem:[n] partitions stem:[R\_ai\_@VbeTbe], each containing the key attributes of
-stem:[R], the attribute stem:[a_i], a valid-time temporal attribute stem:[@Vbe],
+* stem:[n] partitions R_a~i~_@VbeTbe, each containing the key attributes of
+stem:[R], the attribute a~i~, a valid-time temporal attribute stem:[@Vbe],
 and a transaction-time temporal attribute stem:[@Tbe].
 
 The following figure illustrates an example of the bitemporalization of a

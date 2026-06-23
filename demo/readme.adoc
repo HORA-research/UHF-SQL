@@ -1,6 +1,9 @@
 = Demonstration
 
 Database examples for the software demonstration.
+For the demonstration purpose, one database (uhf) is used. It contains the `UHF` schema (utility functions),
+the source (non-historicized) database schema, and the historicized database schema.
+Each example will be stored in a different schema.
 
 == Prerequisites
 
@@ -11,18 +14,21 @@ Softwares :
 * [optional] DB client (pgAdmin or DataGrip).
 
 For PostgreSQL we have a set of utility functions to create.
-Using a PostgreSQL user with CREATE DATABASE privileges. 
+Using a PostgreSQL user with CREATE DATABASE privileges.
 
-. Execute `UHF-base_build.sh`
+. Make the script executable from the project root: `chmod u+x ./lib/uhf-base/UHF-base_build.sh`.
+. Execute from the project root: `./lib/uhf-base/UHF-base_build.sh -h`, to see the available options.
+. Execute from the project root: `./uhf-base/UHF-base_build.sh -b <database>`, replacing `<database>` with the name of your database. +
+Example: `./lib/uhf-base/UHF-base_build.sh -b postgres`
 
-For the demonstration purpose, one database (uhf) is used.
-Each example will be stored in a different schema.
+The `UHF` schema containing the utility functions will be created in the `uhf` database.
 
 [NOTE]
 ====
 The `rdbmsPath` parameter in the configuration file must be adapted to your PostgreSQL installation path. For example:
 
 * macOS (Postgres.app) : `/Applications/Postgres.app/Contents/Versions/17/bin/psql`
+* Ubuntu : `usr/lib/bin`
 ====
 
 == Supplier-Part
@@ -38,8 +44,8 @@ The `rdbmsPath` parameter in the configuration file must be adapted to your Post
 == MIMIC-IV Hosp 
 
 . Build the initial schema :
-.. `demo/mimiciv_hosp/sql/table_cre.sql` and 
-.. `demo/mimiciv_hosp/sql/constraint.sql`.
+.. `demo/mimiciv_hosp/src/table_cre.sql` and
+.. `demo/mimiciv_hosp/src/constraint.sql`.
 . Modify the configuration if needed: +
 `demo/mimiciv_hosp/configuration/config.yaml`
 . Execute UHF-SQL in a terminal: +

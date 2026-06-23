@@ -1,8 +1,11 @@
 = Demonstration
 
 Des exemples de base de données pour la démonstration du logiciel.
+À des fins de démonstration, une seule base de données (`uhf`) est utilisée. Elle contient le schéma `UHF` (fonctions utilitaires),
+le schéma de la base de données source (non historicisée) et le schéma de la base de données historicisée.
+Chaque exemple est stocké dans un schéma différent.
 
-== Prerequisites
+== Pré-requis
 
 Logiciels : 
 
@@ -11,18 +14,21 @@ Logiciels :
 * [optionel] Un client de BD (pgAdmin or DataGrip).
 
 Pour PostgreSQL, nous devons créer un ensemble de fonctions utilitaires.
-Avec un utilisateur PostgreSQL disposant des privilèges CREATE DATABASE. 
+Avec un utilisateur PostgreSQL disposant des privilèges CREATE DATABASE.
 
-. Executer `UHF-base_build.sh`
+. Rendre le script exécutable depuis la racine du projet: `chmod u+x ./lib/uhf-base/UHF-base_build.sh`.
+. Exécuter depuis la racine du projet: `./lib/uhf-base/UHF-base_build.sh -h`, pour voir les options disponibles.
+. Exécuter depuis la racine du projet: `./lib/uhf-base/UHF-base_build.sh -b <database>`, en remplaçant `<database>` par le nom de votre base de données. +
+Exemple: `./lib/uhf-base/UHF-base_build.sh -b postgres`
 
-À des fins de démonstration, une seule base de données (uhf) est utilisée.
-Chaque exemple est stocké dans un schéma différent.
+Le schéma `UHF` contenant les fonctions utilitaires sera créé dans la base de données `uhf`.
 
 [NOTE]
 ====
 Le paramètre `rdbmsPath` dans le fichier de configuration doit être adapté selon le chemin d'installation de PostgreSQL sur votre machine. Par exemple :
 
 * macOS (Postgres.app) : `/Applications/Postgres.app/Contents/Versions/17/bin/psql`
+* Ubuntu : `usr/lib/bin`
 ====
 
 == Supplier-Part
@@ -30,7 +36,7 @@ Le paramètre `rdbmsPath` dans le fichier de configuration doit être adapté se
 . Constuire le schéma initial :
 .. Dans un client BD executer le fichier : `demo/Supplier-Part/src/table_cresql`. **OU**
 .. Dans un terminal : `psql -d uhf -f demo/Supplier-Part/src/table_cre.sql`
-. Modifier le fichier de caonfiguration au besoin : +
+. Modifier le fichier de configuration au besoin : +
 `demo/Supplier-Part/configuration/config.yaml`
 . Exécuter UHF-SQL dans un terminal : +
    `java -jar uhf-sql-0.2.0-SNAPSHOT.jar demo/Supplier-Part/configuration/config.yaml`
@@ -38,8 +44,8 @@ Le paramètre `rdbmsPath` dans le fichier de configuration doit être adapté se
 == MIMIC-IV Hosp 
 
 . Constuire le schéma initial :
-.. `demo/mimiciv_hosp/sql/table_cre.sql` and 
-.. `demo/mimiciv_hosp/sql/constraint.sql`.
+.. `demo/mimiciv_hosp/src/table_cre.sql` and
+.. `demo/mimiciv_hosp/src/constraint.sql`.
 . Modifier le fichier de caonfiguration au besoin  : +
 `demo/mimiciv_hosp/configuration/config.yaml`
 . Exécuter UHF-SQL dans un terminal : +

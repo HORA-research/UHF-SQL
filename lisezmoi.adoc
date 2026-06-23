@@ -23,13 +23,13 @@ Le logiciel les catégories temporelles suivantes :
 
 UHF-SQL est développé en Java (compatible avec Java 17) avec des libraires externes suivantes :
 
-* [PostgreSQL Driver](https://www.postgresql.org)
-* [SchemaCrawler](https://www.schemacrawler.com)
-* [JGraphT](https://jgrapht.org)
-* [ANTLR](https://www.antlr.org)
-* [jOOQ](https://www.jooq.org)
-* [JUnit Jupiter](https://junit.org)
-* [Testcontainers PostgreSQL](https://java.testcontainers.org/modules/databases/postgres)
+* https://www.postgresql.org[PostgreSQL Driver]
+* https://www.schemacrawler.com[SchemaCrawler]
+* https://jgrapht.org[JGraphT]
+* https://www.antlr.org[ANTLR]
+* https://www.jooq.org[jOOQ]
+* https://junit.org[JUnit Jupiter]
+* https://java.testcontainers.org/modules/databases/postgres[Testcontainers PostgreSQL]
 
 === Entrées
 
@@ -56,12 +56,13 @@ Le logiciel génère un ensemble de scripts pour le schéma historicisé :
 * La création des tables.
 * La création des contraintes liées aux anomalies temporelles.
 * La création des vues historicisées à partir des partitions temporelles.
-* La création des vues historicisées à partir des dépendances fonctionnelles temporelles.
+* La création des fonctions de vérifications des clés référentielles temporelles.
 * La création des vues associées aux anomalies temporelles.
 * La création des fonctions de vérifications des anomalies temporelles.
 * La suppression des domaines et des tables.
 
 === TODO
+Fonctionnalités en cours de développement
 
 * Création des fonctions de vérification des clés référentielles temporelles pour les catégories temporelles transaction (T) et bitemporelle (VT).
 * Création des fonctions de vérification des clés référentielles temporelles pour la catégorie de validité (V) pour les modèles BCDM et DDLM.
@@ -81,6 +82,8 @@ Les étapes :
 . Télécharger l'exécutable (ou le dépôt au complet).
 . Dans un terminal exécuter : +
    `java -jar uhf-sql-0.2.0-SNAPSHOT.jar <fichier-de-configuration>`
+
+Pour des exemples de démonstration, consulter le link:demo/lisezmoi.adoc[lisezmoi de démonstration].
 
 == Équipe
 

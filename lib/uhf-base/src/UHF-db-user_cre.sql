@@ -8,12 +8,13 @@ Objet : Création de la BD et de l'utilisateur
 -- =========================================================================== A
 */
 --
--- Création de la base de données
-create database uhf owner uhf;
---
 -- Création utilisateur
 create user uhf with password 'uhf';
 comment on role uhf is 'Utilisateur pour tester UHF';
+--
+
+-- Création de la base de données
+create database uhf owner uhf;
 --
 /*
 -- =========================================================================== Z

@@ -16,37 +16,31 @@
 hote="localhost"
 port=5432
 bdc=uhf
-schema=public
+schema=uhf
 rep_source=lib/uhf-base/src
 #
 while getopts "a:b:c:h:p:r:s:t:v:" opt;
 do
   case "${opt}" in
     b) bdc=${OPTARG};;
-    c) cons=${OPTARG};;
     h) hote=${OPTARG};;
     p) port=${OPTARG};;
-    r) rep_int=${OPTARG};;
-    s) schema=${OPTARG};;
-    t) test_u=${OPTARG};;
-    v) vers_ref=${OPTARG};;
-    *) echo "usage: $0 -b -h -p -s" >&2
-       echo "-b bdc [Metis8] : nom de la base de données ciblée (BDC) - doit préexister" >&2
-       echo "-h hote [localhost] : adresse (url) du serveur ciblé (hostname)" >&2
-       echo "-p port [5432] : numéro du port desservi par le SGBD" >&2
-       echo "-s schema [${module}] : nom du schéma ciblé (sera créé par les scripts appelés)" >&2
+    *) echo "usage: $0 -b -h -p" >&2
+       echo "-b bdc "${bdc}" : nom de la base de données ciblée (BDC) - doit préexister" >&2
+       echo "-h hote "${hote}": adresse (url) du serveur ciblé (hostname)" >&2
+       echo "-p port "${port}" : numéro du port desservi par le SGBD" >&2
        exit 1 ;;
   esac
 done
 #  --------- Création de la BD
 echo "*** Création de la BD ($(date +"%Y-%m-%d %H:%M:%S"))"
-psql -h "${hote}" -p "${port}" -v m="${rep_source}" <<EOF
+psql -h "${hote}" -p "${port}" -d "${bdc}" -v m="${rep_source}" <<EOF
 \conninfo
 \i :m/UHF-db-user_cre.sql
 EOF
 #  --------- Définition du module
 echo "*** DÉBUT de la définition du module ($(date +"%Y-%m-%d %H:%M:%S"))"
-psql -h "${hote}" -p "${port}" -d "${bdc}" -v s="${schema}" -v m="${rep_source}" <<EOF
+psql -h "${hote}" -p "${port}" -d "uhf" -v s="${schema}" -v m="${rep_source}" <<EOF
 set schema :'s' ;
 \conninfo
 \i :m/UHF.ini.sql

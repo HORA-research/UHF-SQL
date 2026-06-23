@@ -23,13 +23,13 @@ The software supports the following temporal dimensions:
 
 UHF-SQL is developed in Java (compatible with Java 17) using the following external libraries:
 
-* [PostgreSQL Driver](https://www.postgresql.org)
-* [SchemaCrawler](https://www.schemacrawler.com)
-* [JGraphT](https://jgrapht.org)
-* [ANTLR](https://www.antlr.org)
-* [jOOQ](https://www.jooq.org)
-* [JUnit Jupiter](https://junit.org)
-* [Testcontainers PostgreSQL](https://java.testcontainers.org/modules/databases/postgres)
+* https://www.postgresql.org[PostgreSQL Driver]
+* https://www.schemacrawler.com[SchemaCrawler]
+* https://jgrapht.org[JGraphT]
+* https://www.antlr.org[ANTLR]
+* https://www.jooq.org[jOOQ]
+* https://junit.org[JUnit Jupiter]
+* https://java.testcontainers.org/modules/databases/postgres[Testcontainers PostgreSQL]
 
 === Inputs
 
@@ -56,7 +56,7 @@ The software generates a set of scripts for the historicized schema:
 * Creating the tables.
 * Creating constraints related to temporal anomalies.
 * Creating historicized views based on temporal partitions.
-* Creating historicized views based on temporal functional dependencies.
+* Creation of functions for checking temporal foreign key.
 * Creating views associated with temporal anomalies.
 * Creating functions to validate temporal anomalies.
 * Dropping domains and tables.
@@ -74,7 +74,10 @@ Steps :
 . In a terminal run: +
    `java -jar uhf-sql-0.2.0-SNAPSHOT.jar <configuration-file>`
 
+For demonstration examples, refer to the link:demo/readme.adoc[demo README].
+
 === TODO 
+Features under development:
 
 * Creation of functions for checking temporal foreign keys for the transaction-time (T) and bitemporal (VT) schema temporal categories.
 * Creation of functions for checking temporal foreign keys for the valid-time (V) category for BCDM and DDLM models.
