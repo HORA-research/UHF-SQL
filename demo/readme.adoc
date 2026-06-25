@@ -18,8 +18,18 @@ Using a PostgreSQL user with CREATE DATABASE privileges.
 
 . Make the script executable from the project root: `chmod u+x ./lib/uhf-base/UHF-base_build.sh`.
 . Execute from the project root: `./lib/uhf-base/UHF-base_build.sh -h`, to see the available options.
-. Execute from the project root: `./uhf-base/UHF-base_build.sh -b <database>`, replacing `<database>` with the name of your database. +
-Example: `./lib/uhf-base/UHF-base_build.sh -b postgres`
+. Execute from the project root: `./lib/uhf-base/UHF-base_build.sh -u <user> -b <database>`, replacing `<database>` with the name of your database and
+`<user>` with the PostgreSQL username. +
+Example: `./lib/uhf-base/UHF-base_build.sh -u postgres -b postgres`
+
+[NOTE]
+====
+If you use Windows, you should use Git Bash and add `bash` before the commands:
+
+. `bash ./lib/uhf-base/UHF-base_build.sh -h` to see the available options.
+. `bash ./lib/uhf-base/UHF-base_build.sh -u <user> -b <database>` replacing `<database>` with the name of your database and
+`<user>` with the PostgreSQL username.
+====
 
 The `UHF` schema containing the utility functions will be created in the `uhf` database.
 

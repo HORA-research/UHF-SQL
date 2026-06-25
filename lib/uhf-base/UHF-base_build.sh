@@ -16,25 +16,28 @@
 hote="localhost"
 port=5432
 bdc=uhf
+user=postgres
 schema=uhf
 rep_source=lib/uhf-base/src
 #
-while getopts "a:b:c:h:p:r:s:t:v:" opt;
+while getopts "b:h:p:u:s:v:" opt;
 do
   case "${opt}" in
     b) bdc=${OPTARG};;
     h) hote=${OPTARG};;
     p) port=${OPTARG};;
-    *) echo "usage: $0 -b -h -p" >&2
+    u) user=${OPTARG};;
+    *) echo "usage: $0 -b -h -p -u" >&2
        echo "-b bdc "${bdc}" : nom de la base de données ciblée (BDC) - doit préexister" >&2
        echo "-h hote "${hote}": adresse (url) du serveur ciblé (hostname)" >&2
        echo "-p port "${port}" : numéro du port desservi par le SGBD" >&2
+       echo "-u user "${user}" : utilisateur SGBD" >&2
        exit 1 ;;
   esac
 done
 #  --------- Création de la BD
 echo "*** Création de la BD ($(date +"%Y-%m-%d %H:%M:%S"))"
-psql -h "${hote}" -p "${port}" -d "${bdc}" -v m="${rep_source}" <<EOF
+psql -h "${hote}" -p "${port}" -U "${user}" -d "${bdc}" -v m="${rep_source}" <<EOF
 \conninfo
 \i :m/UHF-db-user_cre.sql
 EOF
