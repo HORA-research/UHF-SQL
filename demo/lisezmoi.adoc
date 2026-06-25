@@ -34,9 +34,8 @@ Si vous utilisez Windows, ajouter `bash` avant la commande :
 ====
 
 [start=3]
-. Exécuter depuis la racine du projet: `./lib/uhf-base/UHF-base_build.sh -u <user> -b <database>`, en remplaçant `<database>` par le nom de votre base de données et
-`<user>` par le nom d'utilisateur PostgreSQL. +
-Exemple: `./lib/uhf-base/UHF-base_build.sh -u postgres -b postgres`
+. Exécuter depuis la racine du projet: `./lib/uhf-base/UHF-base_build.sh -b <database>`, en remplaçant `<database>` par le nom de votre base de données. +
+Exemple: `./lib/uhf-base/UHF-base_build.sh -b postgres`
 
 [NOTE]
 ====

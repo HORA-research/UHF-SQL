@@ -31,7 +31,7 @@ do
        echo "-b bdc "${bdc}" : nom de la base de données ciblée (BDC) - doit préexister" >&2
        echo "-h hote "${hote}": adresse (url) du serveur ciblé (hostname)" >&2
        echo "-p port "${port}" : numéro du port desservi par le SGBD" >&2
-       echo "-u user "${user}" : utilisateur SGBD" >&2
+       echo "-u user "${user}" : utilisateur PostgreSQL" >&2
        exit 1 ;;
   esac
 done
