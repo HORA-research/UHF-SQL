@@ -17,16 +17,31 @@ Pour PostgreSQL, nous devons créer un ensemble de fonctions utilitaires.
 Avec un utilisateur PostgreSQL disposant des privilèges CREATE DATABASE.
 
 . Rendre le script exécutable depuis la racine du projet: `chmod u+x ./lib/uhf-base/UHF-base_build.sh`.
+
+[NOTE]
+====
+Si vous utilisez Windows, vous devez utiliser Git Bash et exécuter: `chmod u+x ./lib/uhf-base/UHF-base_build.sh`
+====
+
+[start=2]
 . Exécuter depuis la racine du projet: `./lib/uhf-base/UHF-base_build.sh -h`, pour voir les options disponibles.
+
+[NOTE]
+====
+Si vous utilisez Windows, ajouter `bash` avant la commande :
+
+. `bash ./lib/uhf-base/UHF-base_build.sh -h`, pour voir les options disponibles.
+====
+
+[start=3]
 . Exécuter depuis la racine du projet: `./lib/uhf-base/UHF-base_build.sh -u <user> -b <database>`, en remplaçant `<database>` par le nom de votre base de données et
 `<user>` par le nom d'utilisateur PostgreSQL. +
 Exemple: `./lib/uhf-base/UHF-base_build.sh -u postgres -b postgres`
 
 [NOTE]
 ====
-Si vous utilisez Windows, vous devez utiliser Git Bash et ajouter `bash` avant les commandes :
+Si vous utilisez Windows, ajouter `bash` avant la commande :
 
-. `bash ./lib/uhf-base/UHF-base_build.sh -h`, pour voir les options disponibles.
 . `bash ./lib/uhf-base/UHF-base_build.sh -u <user> -b <database>` en remplaçant `<database>` par le nom de votre base de données et
 `<user>` par le nom d'utilisateur PostgreSQL.
 ====

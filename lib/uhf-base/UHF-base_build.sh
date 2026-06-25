@@ -43,7 +43,7 @@ psql -h "${hote}" -p "${port}" -U "${user}" -d "${bdc}" -v m="${rep_source}" <<E
 EOF
 #  --------- Définition du module
 echo "*** DÉBUT de la définition du module ($(date +"%Y-%m-%d %H:%M:%S"))"
-psql -h "${hote}" -p "${port}" -d "uhf" -v s="${schema}" -v m="${rep_source}" <<EOF
+psql -h "${hote}" -p "${port}" -U "uhf" -d "uhf" -v s="${schema}" -v m="${rep_source}" <<EOF
 set schema :'s' ;
 \conninfo
 \i :m/UHF.ini.sql
